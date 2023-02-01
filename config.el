@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq user-full-name "Aoife Hughes"
+      user-mail-address "ahughes@turing.ac.uk")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -32,7 +32,8 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-one)
+
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -74,3 +75,25 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; AH Custom here
+;;
+(defun load-directory (dir)
+    (let ((load-it (lambda (f)
+                     (load-file (concat (file-name-as-directory dir) f)))
+                   ))
+      (mapc load-it (directory-files dir nil "\\.el$"))))
+
+  (load-directory "~/.doom.d/configs/")
+  (setq yas-snippet-dirs '("~/.doom.d/snippets/"))
+
+  (setq ispell-dictionary "en_GB")
+
+  (electric-pair-mode)
+  (set-default 'truncate-lines nil)
+  (global-prettify-symbols-mode 1)
+  (add-hook 'text-mode-hook 'turn-on-auto-fill)
+
+  (defun set-my-theme (_)
+    (load-theme 'nord))
+  (add-to-list 'after-make-frame-functions #'set-my-theme)
